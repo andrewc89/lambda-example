@@ -18,7 +18,7 @@ export class Manager implements IManager {
   public async getById(id: string): Promise<Dog> {
     const dog = await this.repository.getDogById(id);
     if (!dog) {
-      throw new NotFoundError("Dog not found");
+      throw new NotFoundError(`Dog not found with id: ${id}`);
     }
     return dog;
   }
