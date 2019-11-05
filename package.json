@@ -1,0 +1,23 @@
+{
+  "name": "lambda-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-lambda": "^0.1.2",
+    "inversify": "^5.0.1",
+    "loglevel": "^1.6.4",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.34",
+    "@types/node": "^12.12.5",
+    "tslint": "^6.0.0-beta0",
+    "typescript": "^3.6.4"
+  }
+}
