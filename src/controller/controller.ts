@@ -1,13 +1,14 @@
 import { inject, injectable } from "inversify";
-import { Callback } from "aws-lambda";
+const log = require("loglevel");
 
 import { IDENTIFIERS } from "../identifiers";
 import { IManager } from "../manager";
 import { LambdaEvent } from "./lambda-event";
 import { LambdaResponse } from "./lambda-response";
+import { BadRequestError, NotFoundError } from "../errors";
 
 export interface IController {
-  getById(event: LambdaEvent, callback: Callback): Promise<void>;
+  getById(event: LambdaEvent): Promise<LambdaResponse>;
 }
 
 @injectable()
@@ -16,26 +17,25 @@ export class Controller implements IController {
     @inject(IDENTIFIERS.MANAGER) private readonly manager: IManager,
   ) {}
 
-  public async getById(event: LambdaEvent, callback: Callback): Promise<void> {
-    const id = event.getId();
-    if (!id) {
-      callback(
-        null,
-        new LambdaResponse(400, { message: "Need to specify id" }),
-      );
-    }
+  public async getById(event: LambdaEvent): Promise<LambdaResponse> {
+    try {
+      const id = event.getId();
+      if (!id) {
+        throw new BadRequestError("Need to specify id");
+      }
 
-    const dog = await this.manager.getById(id);
-    if (!dog) {
-      callback(
-        null,
-        new LambdaResponse(404, { message: "No dog found" }),
-      );
-    }
+      const dog = await this.manager.getById(id);
+      return new LambdaResponse(200, dog);
+    } catch (err) {
+      log.error(err.stack);
+      if (err.constructor === BadRequestError) {
+        return new LambdaResponse(400, err.message);
+      }
+      else if (err.constructor === NotFoundError) {
+        return new LambdaResponse(404, err.message);
+      }
 
-    callback(
-      null,
-      new LambdaResponse(200, dog),
-    );
+      return new LambdaResponse(500);
+    }
   }
 }
