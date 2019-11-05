@@ -3,12 +3,12 @@ const log = require("loglevel");
 
 import { IDENTIFIERS } from "../identifiers";
 import { IManager } from "../manager";
-import { LambdaEvent } from "./lambda-event";
+import { ILambdaEvent } from "./lambda-event";
 import { LambdaResponse } from "./lambda-response";
 import { BadRequestError, NotFoundError } from "../errors";
 
 export interface IController {
-  getById(event: LambdaEvent): Promise<LambdaResponse>;
+  getById(event: ILambdaEvent): Promise<LambdaResponse>;
 }
 
 @injectable()
@@ -17,7 +17,7 @@ export class Controller implements IController {
     @inject(IDENTIFIERS.MANAGER) private readonly manager: IManager,
   ) {}
 
-  public async getById(event: LambdaEvent): Promise<LambdaResponse> {
+  public async getById(event: ILambdaEvent): Promise<LambdaResponse> {
     try {
       const id = event.getId();
       if (!id) {

@@ -10,9 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "aws-lambda": "^0.1.2",
+    "envalid": "^5.0.0",
     "inversify": "^5.0.1",
     "loglevel": "^1.6.4",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^8.4.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.34",
