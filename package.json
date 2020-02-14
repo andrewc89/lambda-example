@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-lambda": "^0.1.2",
+    "aws-lambda": "^1.0.5",
     "envalid": "^5.0.0",
     "inversify": "^5.0.1",
     "loglevel": "^1.6.4",
